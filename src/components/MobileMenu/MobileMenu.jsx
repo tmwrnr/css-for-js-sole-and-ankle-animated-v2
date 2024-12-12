@@ -47,8 +47,6 @@ const Overlay = styled(Dialog.Overlay)`
   position: fixed;
   inset: 0;
   background: var(--color-backdrop);
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const Content = styled(Dialog.Content)`

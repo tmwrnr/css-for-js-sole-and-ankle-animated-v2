@@ -1,5 +1,5 @@
 {
-  "type": "functional",
+  "lang": "js",
   "prettierConfig": {
     "semi": true,
     "singleQuote": true,

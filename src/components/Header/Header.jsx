@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -20,12 +20,12 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale" text="Sale" />
+          <NavLink href="/new" text="New&nbsp;Releases" />
+          <NavLink href="/men" text="Men" />
+          <NavLink href="/women" text="Women" />
+          <NavLink href="/kids" text="Kids" />
+          <NavLink href="/collections" text="Collections" />
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -114,16 +114,50 @@ const Filler = styled.div`
   }
 `;
 
-const NavLink = styled.a`
+const LinkWrapper = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
+  position: relative;
 
   &:first-of-type {
     color: var(--color-secondary);
   }
 `;
+
+const DefaultLinkText = styled.span`
+  --position-start: 0;
+  --position-end: -100%;
+  display: block;
+  transition: transform 250ms ease-in;
+  transform: translateY(var(--position-start));
+
+  @media (prefers-reduced-motion: no-preference) {
+    ${LinkWrapper}:hover & {
+      transform: translateY(var(--position-end));
+      transition: transform 150ms ease-out;
+    }
+  }
+`;
+
+const HoveredLinkText = styled(DefaultLinkText)`
+  --position-start: 100%;
+  --position-end: 0;
+  position: absolute;
+  top: 0;
+  font-weight: ${WEIGHTS.bold};
+`;
+
+const NavLink = ({ href, text }) => {
+  return (
+    <LinkWrapper href={href}>
+      <DefaultLinkText>{text}</DefaultLinkText>
+      <HoveredLinkText aria-hidden="true">{text}</HoveredLinkText>
+    </LinkWrapper>
+  );
+};
 
 export default Header;
